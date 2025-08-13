@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pokepedia/data/models/pokemon_model.dart';
+import 'package:pokepedia/data/models/pokemon_detail_model.dart';
 import 'package:pokepedia/ui/pokemon_list/pokemon_list_bloc.dart';
 import 'package:pokepedia/ui/pokemon_list/pokemon_list_event.dart';
 import 'package:pokepedia/ui/pokemon_list/pokemon_list_state.dart';

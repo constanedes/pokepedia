@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pokepedia/data/models/pokemon_model.dart';
+import 'package:pokepedia/data/models/pokemon_detail_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'pokemon_overview_event.dart';
 import 'pokemon_overview_state.dart';

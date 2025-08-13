@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:pokepedia/data/models/pokemon_model.dart';
+import 'package:pokepedia/data/models/pokemon_detail_model.dart';
 
 abstract class PokemonListState extends Equatable {
   @override
