@@ -9,7 +9,7 @@ class PokemonOverviewBloc extends Bloc<PokemonOverviewEvent, PokemonOverviewStat
   final PokemonRepository repository;
   static const _favoritesKey = 'favorites';
 
-  final List<Pokemon> _favorites = [];
+  final List<PokemonDetail> _favorites = [];
   final List<int> _favoriteIds = [];
 
   PokemonOverviewBloc(this.repository) : super(PokemonOverviewInitial()) {

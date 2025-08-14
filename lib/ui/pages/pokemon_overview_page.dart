@@ -85,7 +85,7 @@ class PokemonOverviewPage extends StatelessWidget {
                   children: [
                     Center(
                       child: Image.network(
-                        p.derivedImageUrl,
+                        p.spriteUrl,
                         height: 200,
                         fit: BoxFit.contain,
                         errorBuilder: (_, _, _) =>
@@ -96,7 +96,7 @@ class PokemonOverviewPage extends StatelessWidget {
                     Wrap(
                       spacing: 8,
                       children: p.types
-                          !.map(
+                          .map(
                             (t) => Chip(
                               label: Text(t.name.toUpperCase()),
                               backgroundColor: getTypeColor(t.name),
@@ -106,7 +106,6 @@ class PokemonOverviewPage extends StatelessWidget {
                           .toList(),
                     ),
                     const SizedBox(height: 12),
-                    // Mostrar generación (si disponible),
                     const Text(
                       'Stats',
                       style: TextStyle(
@@ -114,7 +113,7 @@ class PokemonOverviewPage extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    ...p.stats!.map(
+                    ...p.stats.map(
                       (s) => Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4),
                         child: Row(
@@ -153,7 +152,7 @@ class PokemonOverviewPage extends StatelessWidget {
                     Wrap(
                       spacing: 8,
                       children: p.abilities
-                          !.map(
+                          .map(
                             (a) => Chip(
                               label: Text(a.name),
                               backgroundColor: Colors.green.shade300,
@@ -171,7 +170,7 @@ class PokemonOverviewPage extends StatelessWidget {
                               'Height',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
-                            Text('${p.height! / 10} m'),
+                            Text('${p.height / 10} m'),
                           ],
                         ),
                         Column(
@@ -180,7 +179,7 @@ class PokemonOverviewPage extends StatelessWidget {
                               'Weight',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
-                            Text('${p.weight! / 10} kg'),
+                            Text('${p.weight / 10} kg'),
                           ],
                         ),
                       ],

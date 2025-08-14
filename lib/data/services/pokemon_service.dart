@@ -1,4 +1,3 @@
-// lib/data/services/pokemon_service.dart
 import '../../core/services/http_service.dart';
 
 class PokemonService {

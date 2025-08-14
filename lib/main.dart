@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart'; // <- Asegurate de importarlo
+import 'package:provider/provider.dart';
 import 'package:pokepedia/core/routes/pokemon_routes.dart';
 import 'package:pokepedia/core/services/http_service.dart';
 import 'package:pokepedia/data/repositories/pokemon_repository.dart';
@@ -30,8 +30,8 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Pokepedia',
-        initialRoute: PokemonRoutes.list,
+        title: 'PokePedia',
+        initialRoute: PokemonRoutes.home,
         debugShowCheckedModeBanner: false,
         onGenerateRoute: PokemonRoutes.onGenerateRoute,
         theme: ThemeData(

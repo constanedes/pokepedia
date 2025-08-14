@@ -14,7 +14,7 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
       FetchPokemonList event, Emitter<PokemonListState> emit) async {
     emit(PokemonListLoading());
     try {
-      final data = await repository.fetchPokemonListWithTypes(
+      final data = await repository.fetchPokemonList(
         event.limit,
         event.offset,
       );

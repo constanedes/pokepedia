@@ -26,7 +26,7 @@ class BackToList extends PokemonOverviewEvent {
 }
 
 class AddToFavorites extends PokemonOverviewEvent {
-  final Pokemon pokemon;
+  final PokemonDetail pokemon;
 
   const AddToFavorites(this.pokemon);
 

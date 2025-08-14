@@ -14,7 +14,7 @@ class PokemonOverviewInitial extends PokemonOverviewState {}
 class PokemonOverviewLoading extends PokemonOverviewState {}
 
 class PokemonOverviewLoaded extends PokemonOverviewState {
-  final Pokemon pokemon;
+  final PokemonDetail pokemon;
   final bool isFavorite;
 
   const PokemonOverviewLoaded(this.pokemon, {required this.isFavorite});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pokepedia/data/models/pokemon_detail_model.dart';
+import 'package:pokepedia/data/models/pokemon_list_model.dart';
 import 'package:pokepedia/ui/pokemon_list/pokemon_list_bloc.dart';
 import 'package:pokepedia/ui/pokemon_list/pokemon_list_event.dart';
 import 'package:pokepedia/ui/pokemon_list/pokemon_list_state.dart';
@@ -16,13 +16,12 @@ class _PokemonListPageState extends State<PokemonListPage> {
   final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
-  final List<Pokemon> _allPokemons = [];
-  List<Pokemon> _filteredPokemons = [];
+  final List<PokemonListItem> _allPokemons = [];
+  List<PokemonListItem> _filteredPokemons = [];
 
   bool _isLoadingMore = false;
   int _offset = 0;
   final int _limit = 50;
-  int _totalCount = 0;
 
   @override
   void initState() {
@@ -34,14 +33,15 @@ class _PokemonListPageState extends State<PokemonListPage> {
   }
 
   void _loadPokemons() {
-    context.read<PokemonListBloc>().add(FetchPokemonList(limit: _limit, offset: _offset));
+    context
+        .read<PokemonListBloc>()
+        .add(FetchPokemonList(limit: _limit, offset: _offset));
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels >=
-            _scrollController.position.maxScrollExtent - 200 &&
-        !_isLoadingMore &&
-        _allPokemons.length < _totalCount) {
+    if (_scrollController.position.atEdge &&
+        _scrollController.position.pixels != 0 &&
+        !_isLoadingMore) {
       _isLoadingMore = true;
       _offset += _limit;
       _loadPokemons();
@@ -96,22 +96,18 @@ class _PokemonListPageState extends State<PokemonListPage> {
           if (state is PokemonListLoaded) {
             setState(() {
               _isLoadingMore = false;
-              _totalCount = state.data.length;
-
 
               final newPokemons = state.data.toList();
               final currentNames = _allPokemons.map((e) => e.name).toSet();
-
-              _allPokemons.addAll(newPokemons.where((p) => !currentNames.contains(p.name)));
+              _allPokemons
+                  .addAll(newPokemons.where((p) => !currentNames.contains(p.name)));
 
               final query = _searchController.text.toLowerCase();
-              if (query.isEmpty) {
-                _filteredPokemons = _allPokemons;
-              } else {
-                _filteredPokemons = _allPokemons
-                    .where((p) => p.name.toLowerCase().contains(query))
-                    .toList();
-              }
+              _filteredPokemons = query.isEmpty
+                  ? _allPokemons
+                  : _allPokemons
+                      .where((p) => p.name.toLowerCase().contains(query))
+                      .toList();
             });
           } else if (state is PokemonListError) {
             setState(() {
@@ -123,7 +119,8 @@ class _PokemonListPageState extends State<PokemonListPage> {
           }
         },
         builder: (context, state) {
-          if (state is PokemonListInitial || (_allPokemons.isEmpty && state is! PokemonListLoaded)) {
+          if (state is PokemonListInitial ||
+              (_allPokemons.isEmpty && state is! PokemonListLoaded)) {
             return const Center(child: CircularProgressIndicator());
           }
 
@@ -150,8 +147,8 @@ class _PokemonListPageState extends State<PokemonListPage> {
                     onTap: () {
                       Navigator.pushNamed(
                         context,
-                        '/pokemon/overview',
-                        arguments: pokemon.name
+                        '/pokemon-overview',
+                        arguments: pokemon.name,
                       );
                     },
                     child: Card(
@@ -164,9 +161,9 @@ class _PokemonListPageState extends State<PokemonListPage> {
                         children: [
                           Expanded(
                             child: Image.network(
-                              pokemon.derivedImageUrl,
+                              pokemon.imageUrl,
                               fit: BoxFit.contain,
-                              errorBuilder: (_, _, _) =>
+                              errorBuilder: (_, __, ___) =>
                                   const Icon(Icons.error),
                             ),
                           ),
@@ -185,20 +182,11 @@ class _PokemonListPageState extends State<PokemonListPage> {
                 },
               ),
               if (_isLoadingMore)
-                Positioned(
-                  bottom: 8,
+                const Positioned(
+                  bottom: 16,
                   left: 0,
                   right: 0,
-                  child: Center(
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.white70,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const CircularProgressIndicator(),
-                    ),
-                  ),
+                  child: Center(child: CircularProgressIndicator()),
                 ),
             ],
           );
